@@ -21,14 +21,6 @@ namespace TicTacToe
             Console.WriteLine("   {0}  |   {1}   |  {2} ", Spaces[6], Spaces[7], Spaces[8]);
             Console.WriteLine("      |       |      ");
         }
-        static void DrawX(int pos)
-        {
-            Spaces[pos] = 'X';
-        }
-        static void DrawO(int pos)
-        {
-            Spaces[pos] = 'O';
-        }
         static void Check()
         {
             if (Spaces[0] == Spaces[1] && Spaces[1] == Spaces[2] ||
@@ -58,38 +50,57 @@ namespace TicTacToe
         {
             while (Won == false)
             {
-                Console.WriteLine($"Choose your postition player {Player}");
-                Draw();
-                int? pos = 0;
+                
+                int pos = 0;
                 try
                 {
-                    
+                    Console.Clear();
+                    Console.WriteLine($"Choose your postition player {Player}");
+                    Draw();
+                    Console.ResetColor();
                     Console.Write("\n\rYour selection: ");
-                    pos = Convert.ToInt32(Console.ReadLine()) -1;
+                    pos = int.Parse(Console.ReadLine()) -1;
+                    if(Player == 1)
+                    {
+                        if (Spaces[pos] == 'X' | Spaces[pos] == 'O')
+                        {
+                            Console.WriteLine("Space has already been used");
+                            Thread.Sleep(5000);
+                            continue;
+                        } else
+                        {
+                            Spaces[pos] = 'X';
+                        }
+                    }
+                    else
+                    {
+                        if (Spaces[pos] == 'X' | Spaces[pos] == 'O')
+                        {
+                            Console.WriteLine("Space has already been used");
+                            Thread.Sleep(5000);
+                            continue;
+                        } else
+                        {
+                            Spaces[pos] = 'O';
+                        }
+                    }
+                    Player = Player == 1 ? 2 : 1;
+                    Check();
+                    if (Won == true)
+                    {
+                        Console.WriteLine($"You win Player {Player}");
+                        Thread.Sleep(5000);
+                    }
+                    Draw();
 
-                }
+                    }
                 catch (Exception)
                 {
-                
+                    Console.BackgroundColor = ConsoleColor.Red;
+                    Console.Clear();
                     Console.WriteLine("Invalid selection"); 
                 }
-                if(Player == 1)
-                {
-                    DrawX((int)pos);
-                }
-                else
-                {
-                    DrawO((int)pos);
-                }
-                Console.Clear();
-                Player = Player == 1 ? 2 : 1;
-                Check();
-                if (Won == true)
-                {
-                    Console.WriteLine($"You win Player {Player}");
-                    Thread.Sleep(5000);
-                }
-                Draw();
+                
                 
             }
         }
