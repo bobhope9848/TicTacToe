@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Linq;
 
 namespace TicTacToe
 {
@@ -42,7 +43,12 @@ namespace TicTacToe
             {
                 Won = true;
             }
-
+            else if (Spaces.All(x => x == 'X' | x == 'O'))
+            {
+                Console.WriteLine("No win possible");
+                Thread.Sleep(5000);
+                Environment.Exit(1);
+            }
 
             
             
